@@ -1,0 +1,62 @@
+version = '0.0.1'
+group = 'jp.programminglife'
+
+buildscript {
+    repositories {
+        repositories {
+            jcenter()
+        }
+        dependencies {
+            classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'maven'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 1
+        versionName "0.0.1"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file:${System.getProperty('user.home')}/.m2/repository")
+        }
+    }
+}
+
+dependencies {
+    compile 'jp.programminglife:libpljp-android:0.1.2@aar'
+    compile 'com.intellij:annotations:12.0'
+    compile 'org.apache.commons:commons-collections4:4.0'
+    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.android.support:recyclerview-v7:22.2.0'
+    provided 'org.projectlombok:lombok:1.16.4'
+    apt 'org.projectlombok:lombok:1.16.4'
+}
