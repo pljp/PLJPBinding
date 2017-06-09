@@ -2,10 +2,9 @@ package jp.programminglife.binding;
 
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -37,40 +36,40 @@ public final class BindableLongObjectMap<I> implements Bindable<Map<Long, I>> {
     // delegateメソッド
     //
 
-    @NotNull
+    @NonNull
     @Override
     public <Target extends View, TargetValue> Target bind(
-            @NotNull View rootView, int id,
-            @NotNull EndPoint<? super Target, Map<Long, I>, TargetValue> endPoint) {
+            @NonNull View rootView, int id,
+            @NonNull EndPoint<? super Target, Map<Long, I>, TargetValue> endPoint) {
         return bindable.bind(rootView, id, endPoint);
     }
 
 
-    @NotNull
+    @NonNull
     @Override
     public <Target extends View, TargetValue> Target bind(
-            @NotNull View rootView, int id,
-            @NotNull EndPoint<? super Target, Map<Long, I>, TargetValue> endPoint,
+            @NonNull View rootView, int id,
+            @NonNull EndPoint<? super Target, Map<Long, I>, TargetValue> endPoint,
             boolean notify,
             Converter<Map<Long, I>, TargetValue> converter) {
         return bindable.bind(rootView, id, endPoint, notify, converter);
     }
 
 
-    @NotNull
+    @NonNull
     @Override
     public <Target extends View, TargetValue> Target bind(
-            @NotNull Activity activity, int id,
-            @NotNull EndPoint<? super Target, Map<Long, I>, TargetValue> endPoint) {
+            @NonNull Activity activity, int id,
+            @NonNull EndPoint<? super Target, Map<Long, I>, TargetValue> endPoint) {
         return bindable.bind(activity, id, endPoint);
     }
 
 
-    @NotNull
+    @NonNull
     @Override
     public <Target extends View, TargetValue> Target bind(
-            @NotNull Activity activity, int id,
-            @NotNull EndPoint<? super Target, Map<Long, I>, TargetValue> endPoint,
+            @NonNull Activity activity, int id,
+            @NonNull EndPoint<? super Target, Map<Long, I>, TargetValue> endPoint,
             boolean notify,
             Converter<Map<Long, I>, TargetValue> converter) {
         return bindable.bind(activity, id, endPoint, notify, converter);
@@ -80,30 +79,46 @@ public final class BindableLongObjectMap<I> implements Bindable<Map<Long, I>> {
     @Override
     public <Target, TargetValue> void bind(
             Target target,
-            @NotNull EndPoint<? super Target, Map<Long, I>, TargetValue> endPoint) {bindable.bind(target, endPoint);}
+            @NonNull EndPoint<? super Target, Map<Long, I>, TargetValue> endPoint) {bindable.bind(target, endPoint);}
 
 
     @Override
     public <Target, TargetValue> void bind(
             Target target,
-            @NotNull EndPoint<? super Target, Map<Long, I>, TargetValue> endPoint,
+            @NonNull EndPoint<? super Target, Map<Long, I>, TargetValue> endPoint,
             boolean notify,
             Converter<Map<Long, I>, TargetValue> converter) {bindable.bind(target, endPoint, notify, converter);}
 
 
     @Override
-    public <T> void attach(
-            @NotNull Bindable<T> target,
-            @NotNull Converter<Map<Long, I>, T> converter) {bindable.attach(target, converter);}
+    public void bind(Action<Map<Long, I>> observer) {
+        bindable.bind(observer);
+    }
 
 
     @Override
-    public void set(@NotNull Map<Long, I> items) {bindable.set(items);}
+    public void bind(Action<Map<Long, I>> observer, boolean notify) {
+        bindable.bind(observer, notify);
+    }
+
+
+    @Override
+    public <BindableValue> void observe(@NonNull Bindable<BindableValue> b) {bindable.observe(b);}
+
+
+    @Override
+    public <T> void attach(
+            @NonNull Bindable<T> target,
+            @NonNull Converter<Map<Long, I>, T> converter) {bindable.attach(target, converter);}
+
+
+    @Override
+    public void set(@NonNull Map<Long, I> items) {bindable.set(items);}
 
 
     @Override
     public void set(
-            @NotNull Map<Long, I> items,
+            @NonNull Map<Long, I> items,
             EndPoint<?, Map<Long, I>, ?> source) {bindable.set(items, source);}
 
 
@@ -116,9 +131,9 @@ public final class BindableLongObjectMap<I> implements Bindable<Map<Long, I>> {
     public Map<Long, I> get() {return bindable.get();}
 
 
-    @NotNull
+    @NonNull
     @Override
-    public Map<Long, I> get(@NotNull Map<Long, I> defaultValue) {return bindable.get(defaultValue);}
+    public Map<Long, I> get(@NonNull Map<Long, I> defaultValue) {return bindable.get(defaultValue);}
 
 
     @Override
@@ -138,7 +153,7 @@ public final class BindableLongObjectMap<I> implements Bindable<Map<Long, I>> {
     public void notifyValueRestored() {bindable.notifyValueRestored();}
 
 
-    @NotNull
+    @NonNull
     public BindableLongObjectMap<I> serializer(
             @Nullable Serializer<Map<Long, I>> serializer) {bindable.serializer(serializer); return this;}
 
@@ -163,9 +178,9 @@ public final class BindableLongObjectMap<I> implements Bindable<Map<Long, I>> {
     public double toDouble(double defaultValue) {return bindable.toDouble(defaultValue);}
 
 
-    @NotNull
+    @NonNull
     @Override
-    public Number toNumber(@NotNull Number defaultValue) {return bindable.toNumber(defaultValue);}
+    public Number toNumber(@NonNull Number defaultValue) {return bindable.toNumber(defaultValue);}
 
 
     @Nullable
@@ -173,9 +188,9 @@ public final class BindableLongObjectMap<I> implements Bindable<Map<Long, I>> {
     public Number toNumber() {return bindable.toNumber();}
 
 
-    @NotNull
+    @NonNull
     @Override
-    public String toString(@NotNull String defaultValue) {return bindable.toString(defaultValue);}
+    public String toString(@NonNull String defaultValue) {return bindable.toString(defaultValue);}
 
 
     @Nullable

@@ -11,7 +11,8 @@ import jp.programminglife.binding.EndPoint;
 
 public class ViewProp {
 
-    private static final Method SET_ON_CLICK_LISTENER_METHOD = BindingUtils.getMethod(View.class, "setOnClickListener", View.OnClickListener.class);
+    private static final Method SET_ON_CLICK_LISTENER_METHOD = BindingUtils
+            .getMethod(View.class, "setOnClickListener", View.OnClickListener.class);
 
 
     public static void addOnClickListener(View view, View.OnClickListener listener) {
@@ -19,7 +20,7 @@ public class ViewProp {
     }
 
 
-    public static final class Visibility<T> extends EndPoint<View, T, T> {
+    public static final class Visibility<T> extends EndPoint<View, T, Object> {
 
         @Override
         protected void onValueChanged() {

@@ -15,9 +15,9 @@ public class SpinnerProp extends AdapterViewProp {
 
     /**
      * Spinnerで選択されたアイテムの位置にバインドするEndPoint。
-     * {@link android.widget.Spinner#setOnItemSelectedListener(android.widget.AdapterView.OnItemSelectedListener)}
+     * {@link Spinner#setOnItemSelectedListener(OnItemSelectedListener)}
      * を使用するので、SpinnerにOnItemSelectedListenerを追加したい場合は
-     * {@link jp.programminglife.binding.endpoint.AdapterViewProp#addOnItemSelectedListener(android.widget.Spinner, android.widget.AdapterView.OnItemSelectedListener)}
+     * {@link jp.programminglife.binding.endpoint.AdapterViewProp#addOnItemSelectedListener(Spinner, OnItemSelectedListener)}
      * で追加する。
      */
     public static final class SelectedPosition extends EndPoint<Spinner, Object, Integer> {

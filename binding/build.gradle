@@ -1,30 +1,18 @@
-version = '0.0.1'
+version = '0.0.2'
 group = 'jp.programminglife'
 
-buildscript {
-    repositories {
-        repositories {
-            jcenter()
-        }
-        dependencies {
-            classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
-        }
-    }
-}
-
 apply plugin: 'com.android.library'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'maven'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 25
+    buildToolsVersion build_tools_version
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 25
         versionCode 1
-        versionName "0.0.1"
+        versionName version
     }
     buildTypes {
         release {
@@ -52,11 +40,9 @@ uploadArchives {
 }
 
 dependencies {
-    compile 'jp.programminglife:libpljp-android:0.1.2@aar'
-    compile 'com.intellij:annotations:12.0'
-    compile 'org.apache.commons:commons-collections4:4.0'
-    compile 'com.android.support:support-v4:22.2.0'
-    compile 'com.android.support:recyclerview-v7:22.2.0'
-    provided 'org.projectlombok:lombok:1.16.4'
-    apt 'org.projectlombok:lombok:1.16.4'
+    compile "jp.programminglife:libpljp-android:$libpljp_version"
+    compile 'org.apache.commons:commons-collections4:4.1'
+    compile "com.android.support:support-v4:$support_lib_version"
+    compile "com.android.support:recyclerview-v7:$support_lib_version"
+    provided 'org.projectlombok:lombok:1.16.16'
 }

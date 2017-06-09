@@ -15,11 +15,12 @@ import jp.programminglife.binding.EndPoint;
 import jp.programminglife.binding.NamedItemAdapter;
 
 
-
 public class AdapterViewProp extends ViewGroupProp {
 
-    private static final Method SET_ON_ITEM_CLICK_LISTENER_METHOD = BindingUtils.getMethod(AdapterView.class, "setOnItemClickListener", AdapterView.OnItemClickListener.class);
-    private static final Method SET_ON_ITEM_SELECTED_LISTENER_METHOD = BindingUtils.getMethod(AdapterView.class, "setOnItemSelectedListener", OnItemSelectedListener.class);
+    private static final Method SET_ON_ITEM_CLICK_LISTENER_METHOD = BindingUtils
+            .getMethod(AdapterView.class, "setOnItemClickListener", OnItemClickListener.class);
+    private static final Method SET_ON_ITEM_SELECTED_LISTENER_METHOD = BindingUtils
+            .getMethod(AdapterView.class, "setOnItemSelectedListener", OnItemSelectedListener.class);
 
 
     public static void addOnItemClickListener(AdapterView<? extends Adapter> view, OnItemClickListener listener) {

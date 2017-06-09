@@ -2,10 +2,9 @@ package jp.programminglife.binding;
 
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
@@ -33,35 +32,35 @@ public final class Var implements Bindable<Object> {
     }
 
 
-    @NotNull
+    @NonNull
     @Override
-    public <Target extends View, TargetValue> Target bind(@NotNull View rootView, int id,
-            @NotNull EndPoint<? super Target, Object, TargetValue> endPoint) {
+    public <Target extends View, TargetValue> Target bind(@NonNull View rootView, int id,
+            @NonNull EndPoint<? super Target, Object, TargetValue> endPoint) {
         return bindable.bind(rootView, id, endPoint);
     }
 
 
-    @NotNull
+    @NonNull
     @Override
-    public <Target extends View, TargetValue> Target bind(@NotNull View rootView, int id,
-            @NotNull EndPoint<? super Target, Object, TargetValue> endPoint,
+    public <Target extends View, TargetValue> Target bind(@NonNull View rootView, int id,
+            @NonNull EndPoint<? super Target, Object, TargetValue> endPoint,
             boolean notify, Converter<Object, TargetValue> converter) {
         return bindable.bind(rootView, id, endPoint, notify, converter);
     }
 
 
-    @NotNull
+    @NonNull
     @Override
-    public <Target extends View, TargetValue> Target bind(@NotNull Activity activity, int id,
-            @NotNull EndPoint<? super Target, Object, TargetValue> endPoint) {
+    public <Target extends View, TargetValue> Target bind(@NonNull Activity activity, int id,
+            @NonNull EndPoint<? super Target, Object, TargetValue> endPoint) {
         return bindable.bind(activity, id, endPoint);
     }
 
 
-    @NotNull
+    @NonNull
     @Override
-    public <Target extends View, TargetValue> Target bind(@NotNull Activity activity, int id,
-            @NotNull EndPoint<? super Target, Object, TargetValue> endPoint,
+    public <Target extends View, TargetValue> Target bind(@NonNull Activity activity, int id,
+            @NonNull EndPoint<? super Target, Object, TargetValue> endPoint,
             boolean notify, Converter<Object, TargetValue> converter) {
         return bindable.bind(activity, id, endPoint, notify, converter);
     }
@@ -69,23 +68,35 @@ public final class Var implements Bindable<Object> {
 
     @Override
     public <Target, TargetValue> void bind(Target target,
-            @NotNull EndPoint<? super Target, Object, TargetValue> endPoint) {bindable.bind(target, endPoint);}
+            @NonNull EndPoint<? super Target, Object, TargetValue> endPoint) {bindable.bind(target, endPoint);}
 
 
     @Override
     public <Target, TargetValue> void bind(Target target,
-            @NotNull EndPoint<? super Target, Object, TargetValue> endPoint,
+            @NonNull EndPoint<? super Target, Object, TargetValue> endPoint,
             boolean notify, Converter<Object, TargetValue> converter) {
         bindable.bind(target, endPoint, notify, converter);
     }
 
 
-    @Deprecated
-    public <BindableValue> void observe(@NotNull Bindable<BindableValue> b) {bindable.observe(b);}
+    @Override
+    public void bind(Action<Object> observer) {
+        bindable.bind(observer);
+    }
 
 
     @Override
-    public <T> void attach(@NotNull Bindable<T> target, @NotNull Converter<Object, T> converter) {
+    public void bind(Action<Object> observer, boolean notify) {
+        bindable.bind(observer);
+    }
+
+
+    @Override
+    public <BindableValue> void observe(@NonNull Bindable<BindableValue> b) {bindable.observe(b);}
+
+
+    @Override
+    public <T> void attach(@NonNull Bindable<T> target, @NonNull Converter<Object, T> converter) {
         bindable.attach(target, converter);
     }
 
@@ -106,9 +117,9 @@ public final class Var implements Bindable<Object> {
     public Object get() {return bindable.get();}
 
 
-    @NotNull
+    @NonNull
     @Override
-    public Object get(@NotNull Object defaultValue) {
+    public Object get(@NonNull Object defaultValue) {
         return bindable.get(defaultValue);
     }
 
@@ -149,9 +160,9 @@ public final class Var implements Bindable<Object> {
     public double toDouble(double defaultValue) {return bindable.toDouble(defaultValue);}
 
 
-    @NotNull
+    @NonNull
     @Override
-    public Number toNumber(@NotNull Number defaultValue) {return bindable.toNumber(defaultValue);}
+    public Number toNumber(@NonNull Number defaultValue) {return bindable.toNumber(defaultValue);}
 
 
     @Nullable
@@ -159,9 +170,9 @@ public final class Var implements Bindable<Object> {
     public Number toNumber() {return bindable.toNumber();}
 
 
-    @NotNull
+    @NonNull
     @Override
-    public String toString(@NotNull String defaultValue) {return bindable.toString(defaultValue);}
+    public String toString(@NonNull String defaultValue) {return bindable.toString(defaultValue);}
 
 
     @Nullable

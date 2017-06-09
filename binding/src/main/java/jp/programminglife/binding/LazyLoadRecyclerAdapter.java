@@ -1,13 +1,12 @@
 package jp.programminglife.binding;
 
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.LruCache;
 import android.view.ViewGroup;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +20,8 @@ public final class LazyLoadRecyclerAdapter<I, VH extends ViewHolder> extends Rec
 
     private static final int NO_REQUEST = -1;
 
-    private final Logger log = new Logger(LazyLoadRecyclerAdapter.class);
-    @NotNull private final DataSource<I, VH> dataSource;
+    private final Logger log = Logger.create(LazyLoadRecyclerAdapter.class);
+    @NonNull private final DataSource<I, VH> dataSource;
     private int blockSize;
     private boolean loading;
     /** 次にロードするブロックの番号 */
@@ -33,7 +32,7 @@ public final class LazyLoadRecyclerAdapter<I, VH extends ViewHolder> extends Rec
     /**
      * @param dataSource データの供給を行うデータソース。
      */
-    public LazyLoadRecyclerAdapter(@NotNull DataSource<I, VH> dataSource) {
+    public LazyLoadRecyclerAdapter(@NonNull DataSource<I, VH> dataSource) {
 
         this.dataSource = dataSource;
         blockSize = 100;
@@ -47,9 +46,9 @@ public final class LazyLoadRecyclerAdapter<I, VH extends ViewHolder> extends Rec
      * アイテムをセットする。
      * @param blockNumber ブロック番号。
      * @param items セットするアイテム。配列はコピーされる。
-     * @throws java.lang.IllegalArgumentException itemsのサイズがブロックサイズと違うとき。
+     * @throws IllegalArgumentException itemsのサイズがブロックサイズと違うとき。
      */
-    public void setItems(int blockNumber, @NotNull List<I> items) throws IllegalArgumentException {
+    public void setItems(int blockNumber, @NonNull List<I> items) throws IllegalArgumentException {
 
         if ( items.size() != blockSize ) throw new IllegalArgumentException();
         List<I> newList = new ArrayList<>(items);
@@ -132,7 +131,7 @@ public final class LazyLoadRecyclerAdapter<I, VH extends ViewHolder> extends Rec
     public interface DataSource<I, VH extends ViewHolder> {
 
         /**
-         * ロードを開始する。ロード完了したら {@link LazyLoadRecyclerAdapter#setItems(int, java.util.List)} を呼び出してデータをセットする。
+         * ロードを開始する。ロード完了したら {@link LazyLoadRecyclerAdapter#setItems(int, List)} を呼び出してデータをセットする。
          * ここでロードをスタートしたあと、setItems()を呼び出すまで次のロードは開始されない。
          * @param blockNumber ロードを開始するブロック番号。ブロックサイズと乗算するとポジションになる。
          */
@@ -147,16 +146,16 @@ public final class LazyLoadRecyclerAdapter<I, VH extends ViewHolder> extends Rec
         /**
          * アイテムのタイプを返す。ItemAdapter内部でタイプ0はロードされていないアイテムとして使用するので、1以上を返すこと。
          */
-        int getItemViewType(@NotNull I item, int position);
+        int getItemViewType(@NonNull I item, int position);
 
         /**
          * Viewを保持するViewHolderを作る。Viewもこのタイミングで作る。
          * @param viewType getItemViewType()で返すビューのタイプ。0はロードされていないアイテムを表す。
          */
-        @NotNull
-        VH createViewHolder(int viewType, @NotNull ViewGroup parent);
+        @NonNull
+        VH createViewHolder(int viewType, @NonNull ViewGroup parent);
 
-        void bind(@NotNull VH holder, @Nullable I item, int position);
+        void bind(@NonNull VH holder, @Nullable I item, int position);
     }
 
 }

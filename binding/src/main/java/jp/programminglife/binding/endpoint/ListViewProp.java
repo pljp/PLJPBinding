@@ -12,10 +12,10 @@ import android.widget.ListView;
 import java.util.HashMap;
 import java.util.Map;
 
-import jp.programminglife.libpljp.android.Logger;
 import jp.programminglife.binding.Converter.ToIntegerConverter;
 import jp.programminglife.binding.EndPoint;
 import jp.programminglife.binding.NamedItemAdapter;
+import jp.programminglife.libpljp.android.Logger;
 
 public class ListViewProp extends AdapterViewProp {
 /*
@@ -120,13 +120,13 @@ public class ListViewProp extends AdapterViewProp {
     /**
      * HashMapにリストの選択されたアイテムをバインドするためのEndPoint。
      * サポートするBindableの値はMap&lt;Long, Object&gt;のみ。それ以外の型の値が入っているときは上書きされる。
-     * このEndPointは{@link ListView#setMultiChoiceModeListener(android.widget.AbsListView.MultiChoiceModeListener)}を使用する。
+     * このEndPointは{@link ListView#setMultiChoiceModeListener(AbsListView.MultiChoiceModeListener)}を使用する。
      *
      */
     public static final class MultipleModalSelectedItems<V> extends EndPoint<ListView, Map<Long, V>, Map<Long, V>> {
 
         final MultipleModalSelectedItems<V> self = this;
-        final Logger log = new Logger(getClass());
+        final Logger log = Logger.create(getClass());
         final AbsListView.MultiChoiceModeListener multiChoiceModeListener;
         private final AbsListView.MultiChoiceModeListener multiChoiceModeListenerWrapper =
                 new AbsListView.MultiChoiceModeListener() {

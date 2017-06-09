@@ -12,7 +12,8 @@ import jp.programminglife.binding.EndPoint;
 
 public class RadioGroupProp extends LinearLayoutProp {
 
-    private static final Method SET_ON_CHECKED_CHANGE_LISTENER_METHOD = BindingUtils.getMethod(RadioGroup.class, "setOnCheckedChangeListener", OnCheckedChangeListener.class);
+    private static final Method SET_ON_CHECKED_CHANGE_LISTENER_METHOD = BindingUtils
+            .getMethod(RadioGroup.class, "setOnCheckedChangeListener", OnCheckedChangeListener.class);
 
 
     public static void addOnCheckedChangeListener(RadioGroup view, OnCheckedChangeListener listener) {

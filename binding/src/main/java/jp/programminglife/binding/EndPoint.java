@@ -1,17 +1,17 @@
 package jp.programminglife.binding;
 
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 public class EndPoint<Target, BindableValue, TargetValue> implements ConvertUtils.Convertible {
 
     private static final Converter DEFAULT_CONVERTER = new DefaultConverter();
-    @NotNull
+    @NonNull
     private final Converter<BindableValue, TargetValue> defaultConverter;
     @Nullable
     private Target target;
-    @NotNull
+    @NonNull
     private Converter<BindableValue, TargetValue> converter;
     @Nullable
     private Bindable<BindableValue> bindable;
@@ -23,7 +23,7 @@ public class EndPoint<Target, BindableValue, TargetValue> implements ConvertUtil
     }
 
 
-    public EndPoint(@NotNull Converter<BindableValue, TargetValue> defaultConverter) {
+    public EndPoint(@NonNull Converter<BindableValue, TargetValue> defaultConverter) {
         this.converter = this.defaultConverter = defaultConverter;
     }
 
@@ -34,8 +34,8 @@ public class EndPoint<Target, BindableValue, TargetValue> implements ConvertUtil
     }
 
 
-    @NotNull
-    public final BindableValue get(@NotNull BindableValue defaultValue) {
+    @NonNull
+    public final BindableValue get(@NonNull BindableValue defaultValue) {
 
         if ( bindable == null ) throw new NullPointerException("bindable == null");
         BindableValue v = bindable.get();
@@ -50,8 +50,8 @@ public class EndPoint<Target, BindableValue, TargetValue> implements ConvertUtil
     }
 
 
-    @NotNull
-    public final TargetValue convert(@NotNull BindableValue defaultValue) {
+    @NonNull
+    public final TargetValue convert(@NonNull BindableValue defaultValue) {
 
         TargetValue tv = converter.convert(get(defaultValue));
         if ( tv == null ) throw new NullPointerException();
@@ -64,7 +64,7 @@ public class EndPoint<Target, BindableValue, TargetValue> implements ConvertUtil
     public final TargetValue convert() {
 
         BindableValue v = get();
-        return v != null ? converter.convert(v) : null;
+        return converter.convert(v);
     }
 
 
@@ -87,7 +87,7 @@ public class EndPoint<Target, BindableValue, TargetValue> implements ConvertUtil
      * targetを返す。もしtargetがnullだったらNullPointerExceptionをスローする。
      * @return target
      */
-    @NotNull
+    @NonNull
     protected final Target getTargetNotNull() {
         if ( target == null ) throw new NullPointerException("target == null");
         return target;
@@ -100,14 +100,14 @@ public class EndPoint<Target, BindableValue, TargetValue> implements ConvertUtil
     }
 
 
-    @NotNull
+    @NonNull
     protected final Bindable<BindableValue> getBindable() {
         if ( bindable == null ) throw new NullPointerException("bindable == null");
         return bindable;
     }
 
 
-    final void bind(@NotNull Bindable<BindableValue> bindable) {
+    final void bind(@NonNull Bindable<BindableValue> bindable) {
         this.bindable = bindable;
         onBind();
     }
@@ -171,9 +171,9 @@ public class EndPoint<Target, BindableValue, TargetValue> implements ConvertUtil
     }
 
 
-    @NotNull
+    @NonNull
     @Override
-    public Number toNumber(@NotNull Number defaultValue) {
+    public Number toNumber(@NonNull Number defaultValue) {
         return ConvertUtils.toNumber(convert(), defaultValue);
     }
 
@@ -185,9 +185,9 @@ public class EndPoint<Target, BindableValue, TargetValue> implements ConvertUtil
     }
 
 
-    @NotNull
+    @NonNull
     @Override
-    public String toString(@NotNull String defaultValue) {
+    public String toString(@NonNull String defaultValue) {
         return ConvertUtils.toString(convert(), defaultValue);
     }
 
@@ -201,7 +201,7 @@ public class EndPoint<Target, BindableValue, TargetValue> implements ConvertUtil
 
     public static final class DefaultConverter implements Converter<Object, Object> {
 
-        @NotNull
+        @NonNull
         @Override
         public Object convert(Object value) {
             return value;
