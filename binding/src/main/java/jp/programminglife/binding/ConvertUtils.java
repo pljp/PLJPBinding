@@ -1,7 +1,7 @@
 package jp.programminglife.binding;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.math.BigDecimal;
 
@@ -14,12 +14,12 @@ public final class ConvertUtils {
         long toLong(long defaultValue);
         float toFloat(float defaultValue);
         double toDouble(double defaultValue);
-        @NotNull
-        Number toNumber(@NotNull Number defaultValue);
+        @NonNull
+        Number toNumber(@NonNull Number defaultValue);
         @Nullable
         Number toNumber();
-        @NotNull
-        String toString(@NotNull String defaultValue);
+        @NonNull
+        String toString(@NonNull String defaultValue);
         @Nullable String toStringOrNull();
     }
 
@@ -37,8 +37,8 @@ public final class ConvertUtils {
     }
 
 
-    @NotNull
-    public static Boolean toBoolean(@Nullable Object value, @NotNull Boolean defaultValue) {
+    @NonNull
+    public static Boolean toBoolean(@Nullable Object value, @NonNull Boolean defaultValue) {
 
         if ( value == null ) return defaultValue;
         if ( value instanceof Boolean ) return (Boolean)value;
@@ -54,8 +54,8 @@ public final class ConvertUtils {
     }
 
 
-    @NotNull
-    public static String toString(@Nullable Object value, @NotNull String defaultValue) {
+    @NonNull
+    public static String toString(@Nullable Object value, @NonNull String defaultValue) {
 
         if ( value == null ) return defaultValue;
         if ( value instanceof String ) return (String)value;
@@ -70,8 +70,8 @@ public final class ConvertUtils {
     }
 
 
-    @NotNull
-    public static Number toNumber(@Nullable Object value, @NotNull Number defaultValue) {
+    @NonNull
+    public static Number toNumber(@Nullable Object value, @NonNull Number defaultValue) {
 
         if ( value == null ) return defaultValue;
         if ( value instanceof Number ) return (Number)value;

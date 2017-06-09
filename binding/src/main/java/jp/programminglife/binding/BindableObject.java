@@ -1,10 +1,9 @@
 package jp.programminglife.binding;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,18 +19,7 @@ import lombok.EqualsAndHashCode;
 public final class BindableObject<Value> implements Bindable<Value> {
 
     public static <TT> BindableObject<TT> create() {
-        return create(null);
-    }
-
-
-    /**
-     * @deprecated create().serializer(serializer)を使う。
-     */
-    @Deprecated
-    public static <TT> BindableObject<TT> create(Serializer<TT> serializer) {
-        BindableObject<TT> ret = new BindableObject<>();
-        ret.setSerializer(serializer);
-        return ret;
+        return create(null, null);
     }
 
 
@@ -40,11 +28,7 @@ public final class BindableObject<Value> implements Bindable<Value> {
     }
 
 
-    /**
-     * @deprecated create().serializer(serializer)を使う。
-     */
-    @Deprecated
-    public static <TT> BindableObject<TT> create(TT value, Serializer<TT> serializer) {
+    private static <TT> BindableObject<TT> create(TT value, Serializer<TT> serializer) {
         BindableObject<TT> ret = new BindableObject<>();
         ret.set(value);
         ret.setSerializer(serializer);
@@ -62,18 +46,18 @@ public final class BindableObject<Value> implements Bindable<Value> {
     }
 
 
-    @NotNull
+    @NonNull
     @Override
     public <Target extends View, TargetValue> Target bind(
-            @NotNull View rootView, int id, @NotNull EndPoint<? super Target, Value, TargetValue> endPoint) {
+            @NonNull View rootView, int id, @NonNull EndPoint<? super Target, Value, TargetValue> endPoint) {
         return bind(rootView, id, endPoint, true, null);
     }
 
 
-    @NotNull
+    @NonNull
     @Override
     public <Target extends View, TargetValue> Target bind(
-            @NotNull View rootView, int id, @NotNull EndPoint<? super Target, Value, TargetValue> endPoint,
+            @NonNull View rootView, int id, @NonNull EndPoint<? super Target, Value, TargetValue> endPoint,
             boolean notify, Converter<Value, TargetValue> converter) {
 
         @SuppressWarnings("unchecked")
@@ -85,18 +69,18 @@ public final class BindableObject<Value> implements Bindable<Value> {
     }
 
 
-    @NotNull
+    @NonNull
     @Override
     public <Target extends View, TargetValue> Target bind(
-            @NotNull Activity activity, int id, @NotNull EndPoint<? super Target, Value, TargetValue> endPoint) {
+            @NonNull Activity activity, int id, @NonNull EndPoint<? super Target, Value, TargetValue> endPoint) {
         return bind(activity, id, endPoint, true, null);
     }
 
 
-    @NotNull
+    @NonNull
     @Override
     public <Target extends View, TargetValue> Target bind(
-            @NotNull Activity activity, int id, @NotNull EndPoint<? super Target, Value, TargetValue> endPoint,
+            @NonNull Activity activity, int id, @NonNull EndPoint<? super Target, Value, TargetValue> endPoint,
             boolean notify, Converter<Value, TargetValue> converter) {
 
         @SuppressWarnings("unchecked")
@@ -110,14 +94,14 @@ public final class BindableObject<Value> implements Bindable<Value> {
 
     @Override
     public <Target, TargetValue> void bind(
-            Target target, @NotNull EndPoint<? super Target, Value, TargetValue> endPoint) {
+            Target target, @NonNull EndPoint<? super Target, Value, TargetValue> endPoint) {
         bind(target, endPoint, true, null);
     }
 
 
     @Override
     public <Target, TargetValue> void bind(
-            Target target, @NotNull EndPoint<? super Target, Value, TargetValue> endPoint,
+            Target target, @NonNull EndPoint<? super Target, Value, TargetValue> endPoint,
             boolean notify, Converter<Value, TargetValue> converter) {
 
         endPoint.setTarget(target);
@@ -125,6 +109,25 @@ public final class BindableObject<Value> implements Bindable<Value> {
         addEndPoint(endPoint);
         if ( notify )
             endPoint.notifyValueChanged();
+    }
+
+
+    @Override
+    public void bind(final Action<Value> observer) {
+        bind(observer, true);
+    }
+
+
+    @Override
+    public void bind(final Action<Value> observer, boolean notify) {
+        bind(null, new EndPoint<Object, Value, Value>() {
+            @Override
+            protected void onBind() {}
+            @Override
+            protected void onRestored() {}
+            @Override
+            protected void onValueChanged() {observer.action(get());}
+        }, notify, null);
     }
 
 
@@ -141,8 +144,8 @@ public final class BindableObject<Value> implements Bindable<Value> {
     }
 
 
-    @Deprecated
-    public <BindableValue> void observe(@NotNull Bindable<BindableValue> b) {
+    @Override
+    public <BindableValue> void observe(@NonNull Bindable<BindableValue> b) {
 
         b.bind(this, new EndPoint<Bindable<Value>, BindableValue, Object>() {
 
@@ -160,7 +163,7 @@ public final class BindableObject<Value> implements Bindable<Value> {
 
 
     @Override
-    public <T> void attach(@NotNull Bindable<T> target, @NotNull Converter<Value, T> converter) {
+    public <T> void attach(@NonNull Bindable<T> target, @NonNull Converter<Value, T> converter) {
 
         bind(target, new EndPoint<Bindable<T>, Value, T>() {
             @Override
@@ -208,9 +211,9 @@ public final class BindableObject<Value> implements Bindable<Value> {
     }
 
 
-    @NotNull
+    @NonNull
     @Override
-    public Value get(@NotNull Value defaultValue) {
+    public Value get(@NonNull Value defaultValue) {
         return value != null ? value : defaultValue;
     }
 
@@ -261,7 +264,7 @@ public final class BindableObject<Value> implements Bindable<Value> {
     }
 
 
-    @NotNull
+    @NonNull
     public BindableObject<Value> serializer(@Nullable Serializer<Value> serializer) {
         this.serializer = serializer;
         return this;
@@ -300,9 +303,9 @@ public final class BindableObject<Value> implements Bindable<Value> {
     }
 
 
-    @NotNull
+    @NonNull
     @Override
-    public Number toNumber(@NotNull Number defaultValue) {
+    public Number toNumber(@NonNull Number defaultValue) {
         return ConvertUtils.toNumber(value, defaultValue);
     }
 
@@ -314,9 +317,9 @@ public final class BindableObject<Value> implements Bindable<Value> {
     }
 
 
-    @NotNull
+    @NonNull
     @Override
-    public String toString(@NotNull String defaultValue) {
+    public String toString(@NonNull String defaultValue) {
         return ConvertUtils.toString(value, defaultValue);
     }
 

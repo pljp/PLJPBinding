@@ -1,15 +1,14 @@
 package jp.programminglife.binding;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -23,7 +22,7 @@ import jp.programminglife.libpljp.android.Logger;
  */
 public final class NamedItemAdapter<V> extends BaseAdapter {
 
-    private final Logger log = new Logger(getClass());
+    private final Logger log = Logger.create(getClass());
     private final LayoutInflater inf;
     private final Context context;
     final ArrayList<Item<V>> items;
@@ -33,18 +32,18 @@ public final class NamedItemAdapter<V> extends BaseAdapter {
     long nextId;
 
 
-    public static <V> NamedItemAdapter<V> createForListView(@NotNull Context context) {
+    public static <V> NamedItemAdapter<V> createForListView(@NonNull Context context) {
         return new NamedItemAdapter<>(context, 1, ItemParams.<V>createDefault());
     }
 
 
-    public static <V> NamedItemAdapter<V> createForSelectableListView(@NotNull Context context) {
+    public static <V> NamedItemAdapter<V> createForSelectableListView(@NonNull Context context) {
         return new NamedItemAdapter<>(context, 1,
                 ItemParams.<V>createDefault().layout(android.R.layout.simple_list_item_activated_1));
     }
 
 
-    public static <V> NamedItemAdapter<V> createForSpinner(@NotNull Context context) {
+    public static <V> NamedItemAdapter<V> createForSpinner(@NonNull Context context) {
         return new NamedItemAdapter<>(context, 1,
                 ItemParams.<V>createDefault()
                         .layout(android.R.layout.simple_spinner_item)
@@ -53,7 +52,7 @@ public final class NamedItemAdapter<V> extends BaseAdapter {
 
 
     public interface ViewUpdater<V> {
-        void update(@NotNull View view, @NotNull Item<V> item);
+        void update(@NonNull View view, @NonNull Item<V> item);
     }
 
 
@@ -73,7 +72,7 @@ public final class NamedItemAdapter<V> extends BaseAdapter {
         public static <V> ItemParams<V> createDefault() {
 
             ViewUpdater<V> vu = new ViewUpdater<V>() {
-                @Override public void update(@NotNull View view, @NotNull Item<V> item) {
+                @Override public void update(@NonNull View view, @NonNull Item<V> item) {
                     ((TextView)view).setText(item.label);
                 }
             };
@@ -110,11 +109,11 @@ public final class NamedItemAdapter<V> extends BaseAdapter {
             return new ItemParams<>(viewType, layout, dropDownLayout, viewUpdater, dropDownViewUpdater, idMSB);
         }
 
-        public ItemParams<V> viewUpdater(@NotNull ViewUpdater<V> viewUpdater) {
+        public ItemParams<V> viewUpdater(@NonNull ViewUpdater<V> viewUpdater) {
             return new ItemParams<>(viewType, layout, dropDownLayout, viewUpdater, dropDownViewUpdater, idMSB);
         }
 
-        public ItemParams<V> dropDownViewUpdater(@NotNull ViewUpdater<V> dropDownViewUpdater) {
+        public ItemParams<V> dropDownViewUpdater(@NonNull ViewUpdater<V> dropDownViewUpdater) {
             return new ItemParams<>(viewType, layout, dropDownLayout, viewUpdater, dropDownViewUpdater, idMSB);
         }
 
@@ -147,7 +146,7 @@ public final class NamedItemAdapter<V> extends BaseAdapter {
         public final boolean enable;
         public final ItemParams<V> params;
 
-        Item(String label, V value, long id, boolean enabled, @NotNull ItemParams<V> params) {
+        Item(String label, V value, long id, boolean enabled, @NonNull ItemParams<V> params) {
             this.label = label;
             this.value = value;
             this.id = ((long)params.idMSB << 56) | (id & 0x00ffffffffffffffL);
@@ -165,7 +164,7 @@ public final class NamedItemAdapter<V> extends BaseAdapter {
      * @param viewTypeCount ビュータイプの数。
      * @param defaultItemParams デフォルトのアイテムパラメーター。ここで渡したインスタンスはコピーせずに利用される。
      */
-    public NamedItemAdapter(@NotNull Context context, int viewTypeCount, @NotNull ItemParams<V> defaultItemParams) {
+    public NamedItemAdapter(@NonNull Context context, int viewTypeCount, @NonNull ItemParams<V> defaultItemParams) {
 
         this.context = context;
         this.inf = LayoutInflater.from(context);
@@ -183,12 +182,12 @@ public final class NamedItemAdapter<V> extends BaseAdapter {
     }
 
 
-    public void add(@NotNull String label, @Nullable V value) {
+    public void add(@NonNull String label, @Nullable V value) {
         add(label, value, getNextId(defaultItemParams.idMSB), true, defaultItemParams);
     }
 
 
-    public void add(@NotNull String label, @Nullable V value, boolean enabled) {
+    public void add(@NonNull String label, @Nullable V value, boolean enabled) {
         add(label, value, getNextId(defaultItemParams.idMSB), enabled, defaultItemParams);
     }
 
@@ -197,13 +196,13 @@ public final class NamedItemAdapter<V> extends BaseAdapter {
      *
      * @param itemParams アイテムのパラメーター。ここで渡したインスタンスはコピーせずに利用される。
      */
-    public void add(@NotNull String label, @Nullable V value, long id, boolean enabled,
-            @NotNull ItemParams<V> itemParams) {
+    public void add(@NonNull String label, @Nullable V value, long id, boolean enabled,
+            @NonNull ItemParams<V> itemParams) {
         add(new Item<>(label, value, id, enabled, itemParams));
     }
 
 
-    private void add(@NotNull Item<V> item) {
+    private void add(@NonNull Item<V> item) {
         items.add(item);
         idToItem.put(item.id, item);
     }
@@ -218,7 +217,7 @@ public final class NamedItemAdapter<V> extends BaseAdapter {
     }
 
 
-    public void addAll(@NotNull String[] labels, @NotNull V[] values) {
+    public void addAll(@NonNull String[] labels, @NonNull V[] values) {
 
         if ( labels.length != values.length ) throw new IllegalArgumentException("labels.length != values.length");
         for (int i=0; i<labels.length; i++)
@@ -231,7 +230,7 @@ public final class NamedItemAdapter<V> extends BaseAdapter {
      * デフォルトのアイテムパラメーターを返す。
      * @return デフォルトのアイテムパラメーター。このクラスが内部で保持するインスタンスをそのまま返す。
      */
-    @NotNull
+    @NonNull
     public ItemParams<V> getDefaultItemParams() {
         return defaultItemParams;
     }
@@ -249,7 +248,7 @@ public final class NamedItemAdapter<V> extends BaseAdapter {
 
 
     @Override
-    @NotNull
+    @NonNull
     public Item<V> getItem(int position) {
         return items.get(position);
     }

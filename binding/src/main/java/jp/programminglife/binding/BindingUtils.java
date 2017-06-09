@@ -1,13 +1,13 @@
 package jp.programminglife.binding;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
 import org.apache.commons.collections4.map.ReferenceIdentityMap;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -32,7 +32,7 @@ public final class BindingUtils {
 
 
     @SuppressWarnings("unchecked")
-    public static void addListener(@NotNull View view, @NotNull Method method, @NotNull Object listener) {
+    public static void addListener(@NonNull View view, @NonNull Method method, @NonNull Object listener) {
 
         HashMap<Method, CallbackSupport<?>> map = listeners.get(view);
         if ( map == null ) {
@@ -59,8 +59,8 @@ public final class BindingUtils {
     }
 
 
-    @NotNull
-    public static Method getMethod(@NotNull Class<?> cls, @NotNull String name, @NotNull Class<?> paramType) {
+    @NonNull
+    public static Method getMethod(@NonNull Class<?> cls, @NonNull String name, @NonNull Class<?> paramType) {
 
         try {
             return cls.getMethod(name, paramType);
@@ -79,7 +79,7 @@ public final class BindingUtils {
      * @param bundle データを格納するBundleオブジェクト。
      * @return 引数bundleで渡されたBundleオブジェクト。bundleがnullの場合は新しく作られる。
      */
-    @NotNull
+    @NonNull
     public static Bundle save(@Nullable Object o, @Nullable Bundle bundle) {
 
         if ( bundle == null )
@@ -118,7 +118,7 @@ public final class BindingUtils {
      * @param o 復元したデータをセットするオブジェクト。null以外の値。
      * @param bundle saveメソッドで保存されたデータ。nullの場合は何もしない。
      */
-    public static void load(@NotNull Object o, @Nullable Bundle bundle) {
+    public static void load(@NonNull Object o, @Nullable Bundle bundle) {
 
         if ( bundle == null ) return;
 
