@@ -1,16 +1,16 @@
-version = '0.0.2'
+version = '0.0.3'
 group = 'jp.programminglife'
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion build_tools_version
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName version
     }
