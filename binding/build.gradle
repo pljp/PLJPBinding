@@ -1,4 +1,4 @@
-version = '0.0.3'
+version = '0.0.4'
 group = 'jp.programminglife'
 
 apply plugin: 'com.android.library'
@@ -6,7 +6,6 @@ apply plugin: 'maven'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion build_tools_version
 
     defaultConfig {
         minSdkVersion 15
@@ -44,5 +43,6 @@ dependencies {
     compile 'org.apache.commons:commons-collections4:4.1'
     compile "com.android.support:support-v4:$support_lib_version"
     compile "com.android.support:recyclerview-v7:$support_lib_version"
-    provided 'org.projectlombok:lombok:1.16.16'
+    compile 'org.projectlombok:lombok:1.16.18'
+    annotationProcessor 'org.projectlombok:lombok:1.16.18'
 }
