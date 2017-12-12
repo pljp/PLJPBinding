@@ -8,12 +8,10 @@ import android.view.View;
 
 import java.io.Serializable;
 
-import lombok.EqualsAndHashCode;
 
-
-@EqualsAndHashCode
 public final class Var implements Bindable<Object> {
 
+    @NonNull
     private final BindableObject<Object> bindable;
 
 
@@ -27,7 +25,7 @@ public final class Var implements Bindable<Object> {
     }
 
 
-    private Var(BindableObject<Object> bindable) {
+    private Var(@NonNull BindableObject<Object> bindable) {
         this.bindable = bindable;
     }
 
@@ -178,4 +176,23 @@ public final class Var implements Bindable<Object> {
     @Nullable
     @Override
     public String toStringOrNull() {return bindable.toStringOrNull();}
+
+
+    @Override
+    public boolean equals(Object o) {
+
+        if ( this == o ) return true;
+        if ( o == null || getClass() != o.getClass() ) return false;
+
+        Var var = (Var) o;
+
+        return bindable.equals(var.bindable);
+    }
+
+
+    @Override
+    public int hashCode() {
+
+        return bindable.hashCode();
+    }
 }

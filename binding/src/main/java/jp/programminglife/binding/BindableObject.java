@@ -8,14 +8,11 @@ import android.view.View;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import lombok.EqualsAndHashCode;
-
 
 /**
  * Bindableの実装クラス。equals, hashCodeは保持する値だけを比較し、EndPointやSerializerは無視する。
  * @param <Value> 値の型。
  */
-@EqualsAndHashCode
 public final class BindableObject<Value> implements Bindable<Value> {
 
     public static <TT> BindableObject<TT> create() {
@@ -36,6 +33,7 @@ public final class BindableObject<Value> implements Bindable<Value> {
     }
 
 
+    @Nullable
     private Value value;
     transient private ArrayList<EndPoint<?, Value, ?>> endPoints;
     transient private Serializer<Value> serializer;
@@ -328,5 +326,24 @@ public final class BindableObject<Value> implements Bindable<Value> {
     @Override
     public String toStringOrNull() {
         return ConvertUtils.toString(value);
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+
+        if ( this == o ) return true;
+        if ( o == null || getClass() != o.getClass() ) return false;
+
+        BindableObject<?> that = (BindableObject<?>) o;
+
+        return value != null ? value.equals(that.value) : that.value == null;
+    }
+
+
+    @Override
+    public int hashCode() {
+
+        return value != null ? value.hashCode() : 0;
     }
 }
