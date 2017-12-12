@@ -1,4 +1,4 @@
-version = '0.0.4'
+version = '0.0.6'
 group = 'jp.programminglife'
 
 apply plugin: 'com.android.library'
@@ -39,10 +39,8 @@ uploadArchives {
 }
 
 dependencies {
-    compile "jp.programminglife:libpljp-android:$libpljp_version"
-    compile 'org.apache.commons:commons-collections4:4.1'
-    compile "com.android.support:support-v4:$support_lib_version"
-    compile "com.android.support:recyclerview-v7:$support_lib_version"
-    compile 'org.projectlombok:lombok:1.16.18'
-    annotationProcessor 'org.projectlombok:lombok:1.16.18'
+    api "jp.programminglife:libpljp-android:$libpljp_version"
+    api 'org.apache.commons:commons-collections4:4.1'
+    api "com.android.support:support-v4:$support_lib_version"
+    api "com.android.support:recyclerview-v7:$support_lib_version"
 }

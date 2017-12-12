@@ -10,9 +10,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.EqualsAndHashCode;
-
-@EqualsAndHashCode
 public final class BindableLongObjectMap<I> implements Bindable<Map<Long, I>> {
 
     private final BindableObject<Map<Long, I>> bindable;
@@ -196,4 +193,23 @@ public final class BindableLongObjectMap<I> implements Bindable<Map<Long, I>> {
     @Nullable
     @Override
     public String toStringOrNull() {return bindable.toStringOrNull();}
+
+
+    @Override
+    public boolean equals(Object o) {
+
+        if ( this == o ) return true;
+        if ( o == null || getClass() != o.getClass() ) return false;
+
+        BindableLongObjectMap<?> that = (BindableLongObjectMap<?>) o;
+
+        return bindable.equals(that.bindable);
+    }
+
+
+    @Override
+    public int hashCode() {
+
+        return bindable.hashCode();
+    }
 }
