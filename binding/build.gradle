@@ -1,4 +1,4 @@
-version = '0.0.7'
+version = '0.0.8'
 group = 'jp.programminglife'
 
 apply plugin: 'com.android.library'
@@ -39,7 +39,7 @@ uploadArchives {
 }
 
 dependencies {
-    api "jp.programminglife.libpljp-android:libpljp-android:$libpljp_version"
+    api "jp.programminglife:libpljp-android:$libpljp_version"
     api 'org.apache.commons:commons-collections4:4.1'
     api "com.android.support:support-v4:$support_lib_version"
     api "com.android.support:recyclerview-v7:$support_lib_version"

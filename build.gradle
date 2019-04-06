@@ -2,7 +2,7 @@
 
 buildscript {
     ext.support_lib_version = '26.1.0'
-    ext.libpljp_version = '0.11.0'
+    ext.libpljp_version = '0.10.1'
     repositories {
         google()
         jcenter()
@@ -20,6 +20,5 @@ allprojects {
         google()
         mavenLocal()
         jcenter()
-        maven { url 'https://jitpack.io' }
     }
 }
